@@ -1,0 +1,42 @@
+<br/><br/>
+
+<h1>Enter github username :</h1>
+<form role="form">
+    <div class="row">
+        <div class="form-group">
+            <input type="text" id="searchbox" class="form-control input-lg">
+        </div>
+    </div>
+    <div class="row" id="result">
+
+    </div>
+</form>
+<script>
+    var timeouter = null;
+    $("#searchbox").keyup(function (e) {
+        if (timeouter !== null)
+            clearTimeout(timeouter);
+        $("#result").empty().append("<h3>Loading...</h3>");
+        //for less queries
+        timeouter = setTimeout(function () {
+            var q = $("#searchbox").val();
+
+            $.getJSON("/search",
+                {
+                    query: q
+                },
+                function (data) {
+//                data  = JSON.parse(data);
+                    $("#result").empty();
+//                $("#result").append("Results for <b>" + q + "</b>");
+                    if (data['login']) {
+                        $("#result").append("<h3>Found !</h3><br/>Image:<img src='"+data['avatar_url']+"'/>")
+                    } else
+                        $("#result").append("<h3>Not found !</h3>");
+//                $.each(data.query.search, function(i,item){
+//                    $("#result").append("<div><a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(item.title) + "'>" + item.title + "</a>" + item.snippet + "</div>");
+//                });
+                });
+        }, 500);
+    });
+</script>
