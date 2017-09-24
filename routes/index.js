@@ -15,7 +15,8 @@ var CACHE = {};
 router.get("/search", function (req, res) {
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query;
-    if(query.length===0)
+    //if blank or username is more than 39 ignore
+    if(query.length===0 || query.length>39)
         res.send({});
 
     if (CACHE[query.query])
