@@ -7,6 +7,9 @@ router.get('/', function (req, res) {
 });
 
 
+//TODO:
+// Cache expiry - store cache data as object with time
+//Only pull content if time is greater than expiry time.
 var CACHE = {};
 //this can be moved to another file.
 router.get("/search", function (req, res) {
